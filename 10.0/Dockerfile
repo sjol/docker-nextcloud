@@ -75,7 +75,7 @@ RUN echo "@commuedge https://nl.alpinelinux.org/alpine/edge/community" >> /etc/a
  && wget -q https://raw.githubusercontent.com/mxe/mxe/7e231efd245996b886b501dad780761205ecf376/src/libiconv-1-fixes.patch \
  && patch -p1 -u < libiconv-1-fixes.patch \
  && make && make install && libtool --finish /usr/local/lib && cd /tmp \
- && wget -q http://is1.php.net/get/php-7.0.13.tar.gz/from/this/mirror -O php7.tar.gz \
+ && wget -q http://uk1.php.net/get/php-7.0.13.tar.gz/from/this/mirror -O php7.tar.gz \
  && tar xzf php7.tar.gz && cd /tmp/php-7.0.13/ext/iconv && phpize7 \
  && ./configure --with-iconv=/usr/local --with-php-config=/usr/bin/php-config7 \
  && make && cp modules/iconv.so /usr/lib/php7/modules && cd /tmp \
