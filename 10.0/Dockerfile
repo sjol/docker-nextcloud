@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:3.5
 MAINTAINER Wonderfall <wonderfall@schrodinger.io>
 
 ARG NEXTCLOUD_VERSION=10.0.2
