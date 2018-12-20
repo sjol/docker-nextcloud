@@ -24,7 +24,7 @@ RUN apk -U upgrade \
     pcre-dev \
     libtool \
     samba-dev \
-    imagemagick-dev \
+    imagemagick-dev imagemagick \
  && apk add \
     libressl \
     ca-certificates \
@@ -34,7 +34,15 @@ RUN apk -U upgrade \
     smbclient \
     apcu \
     redis \
-    imagick \
+ && apk add --no-cache --virtual .build-deps \
+    libxml2-dev \
+    shadow \
+    autoconf \
+    g++ \
+    make \
+ && apk add --no-cache imagemagick-dev imagemagick \
+ && pecl install imagick-beta \
+ && apk del .build-deps \
  && echo "extension=smbclient.so" > /php/conf.d/smbclient.ini \
  && echo "extension=redis.so" > /php/conf.d/redis.ini \
  && echo "extension=imagick.so" > /php/conf.d/imagick.ini \
