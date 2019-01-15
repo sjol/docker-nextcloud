@@ -1,9 +1,7 @@
 ## sjol/docker-nextcloud
 
 
-[![](https://images.microbadger.com/badges/version/wonderfall/nextcloud.svg)](http://microbadger.com/images/wonderfall/nextcloud "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/image/wonderfall/nextcloud.svg)](http://microbadger.com/images/wonderfall/nextcloud "Get your own image badge on microbadger.com")
-
-**This image was made for my own use and I have no intention to make this official. Support won't be regular so if there's an update, or a fix, you can open a pull request. Any contribution is welcome, but please be aware I'm very busy currently. Before opening an issue, please check if there's already one related. Also please use Github instead of Docker Hub, otherwise I won't see your comments. Thanks.**
+> This image is a form from [https://github.com/Wonderfall/docker-nextcloud)[Wonderfall/docker-nextcloud]
 
 ### Features
 - Based on Alpine Linux.
@@ -20,11 +18,8 @@
 - Environment variables provided (see below).
 
 ### Tags
-- **latest** : latest stable version. (13.0)
-- **13.0** : latest 13.0.x version (stable)
-- **daily** : latest code (daily build).
-
-Other tags than `daily` are built weekly. For security reasons, you should occasionally update the container, even if you have the latest version of Nextcloud. **WARNING : automatic build is not working at the moment.**
+- **latest** : latest stable version. (15.0)
+- **15.0** : latest 15.0.x version (stable)
 
 ### Build-time variables
 - **NEXTCLOUD_VERSION** : version of nextcloud
