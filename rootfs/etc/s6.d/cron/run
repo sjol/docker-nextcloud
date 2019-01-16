@@ -2,5 +2,6 @@
 
 while true; do
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/cron.php
+  php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/occ preview:pre-generate &
   sleep <CRON_PERIOD>
 done
