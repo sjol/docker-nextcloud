@@ -30,6 +30,7 @@ RUN apk -U upgrade \
     ca-certificates \
     libsmbclient \
     tzdata \
+    php-bcmath \
  && pecl install \
     smbclient \
     apcu \
