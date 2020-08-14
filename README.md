@@ -1,7 +1,7 @@
 ## sjol/docker-nextcloud
 
 
-> This image is a form from [https://github.com/Wonderfall/docker-nextcloud)[Wonderfall/docker-nextcloud]
+> This image is a fork from [https://github.com/Wonderfall/docker-nextcloud)[Wonderfall/docker-nextcloud]
 
 ### Features
 - Based on Alpine Linux.
