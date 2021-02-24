@@ -1,7 +1,19 @@
 #!/bin/sh
 
+NOTIFY_PID=-1
+
 while true; do
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/cron.php
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/occ preview:pre-generate &
+  
+  if [ -x /apps2/notify_push/bin/x86_64/notify_push ] ; then
+    if output=$(ps -p "$NOTIFY_PID"); then
+      echo "Notify is still running..."
+    else
+      echo "Notify died... restarting..."
+      /apps2/notify_push/bin/x86_64/notify_push /config/config.php &
+      NOTIFY_PID=$!
+    fi
+  fi
   sleep <CRON_PERIOD>
 done
