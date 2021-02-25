@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo $PORT
+export PORT=7867
 NOTIFY_PID=-1
 
 while true; do
