@@ -7,7 +7,7 @@ while true; do
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/occ preview:pre-generate &
   
   if [ -x /apps2/notify_push/bin/x86_64/notify_push ] ; then
-    if output=$(ps -p "$NOTIFY_PID"); then
+    if  kill -0 $NOTIFY_PID 2> /dev/null ; then
       echo "Notify is still running..."
     else
       echo "Notify died... restarting..."
