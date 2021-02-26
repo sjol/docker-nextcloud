@@ -1,13 +1,15 @@
 #!/bin/sh
 
-echo $PORT
+echo "Starting Notify..."
 export PORT=7867
-NOTIFY_PID=-1
+/apps2/notify_push/bin/x86_64/notify_push /config/config.php &
+NOTIFY_PID=$!
 
 while true; do
+  START_TIME=`date +%s`
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/cron.php
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/occ preview:pre-generate &
-  
+
   if [ -x /apps2/notify_push/bin/x86_64/notify_push ] ; then
     if  kill -0 $NOTIFY_PID 2> /dev/null ; then
       echo "Notify is still running..."
@@ -17,5 +19,14 @@ while true; do
       NOTIFY_PID=$!
     fi
   fi
-  sleep <CRON_PERIOD>
+
+  # Calculate seconds to sleep to get to cron period, or wait 10 seconds if running
+  # took longer than cron period
+  END_TIME=`date +%s`
+  ELAPSED_TIME=$(($END_TIME-$START_TIME))
+  CRON_PERIOD=<CRON_PERIOD>
+  CRON_SECONDS=$((${CRON_PERIOD/m/}*60))
+  SLEEP_SECONDS=$(($CRON_SECONDS-$ELAPSED_TIME))
+  if [ $SLEEP_SECONDS -lt 10 ]; then SLEEP_SECONDS=10; fi
+  sleep $SLEEP_SECONDS
 done
