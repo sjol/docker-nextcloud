@@ -15,7 +15,7 @@ while true; do
     NOTIFY_LAST_MOD_NEW=$(date +%s -r /apps2/notify_push/bin/x86_64/notify_push )
     if  kill -0 $NOTIFY_PID 2> /dev/null ; then
       echo "Notify is still running..."
-      if [ $NOTIFY_LAST_MOD < $NOTIFY_LAST_MOD_NEW ]; then
+      if [ $NOTIFY_LAST_MOD -lt $NOTIFY_LAST_MOD_NEW ]; then
         echo "Notify binary was updated. Restarting..."
         kill $NOTIFY_PID
         /apps2/notify_push/bin/x86_64/notify_push /config/config.php &
