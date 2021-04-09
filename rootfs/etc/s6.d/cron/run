@@ -1,33 +1,9 @@
 #!/bin/sh
 
-echo "Starting Notify..."
-export PORT=7867
-/apps2/notify_push/bin/x86_64/notify_push /config/config.php &
-NOTIFY_PID=$!
-NOTIFY_LAST_MOD=$(date +%s -r /apps2/notify_push/bin/x86_64/notify_push )
-
 while true; do
   START_TIME=`date +%s`
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/cron.php
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/occ preview:pre-generate &
-
-  if [ -x /apps2/notify_push/bin/x86_64/notify_push ] ; then
-    NOTIFY_LAST_MOD_NEW=$(date +%s -r /apps2/notify_push/bin/x86_64/notify_push )
-    if  kill -0 $NOTIFY_PID 2> /dev/null ; then
-      echo "Notify is still running..."
-      if [ $NOTIFY_LAST_MOD -lt $NOTIFY_LAST_MOD_NEW ]; then
-        echo "Notify binary was updated. Restarting..."
-        kill $NOTIFY_PID
-        /apps2/notify_push/bin/x86_64/notify_push /config/config.php &
-        NOTIFY_PID=$!
-        NOTIFY_LAST_MOD=$NOTIFY_LAST_MOD_NEW
-      fi
-    else
-      echo "Notify died... restarting..."
-      /apps2/notify_push/bin/x86_64/notify_push /config/config.php &
-      NOTIFY_PID=$!
-    fi
-  fi
 
   # Calculate seconds to sleep to get to cron period, or wait 10 seconds if running
   # took longer than cron period
