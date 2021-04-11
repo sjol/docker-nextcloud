@@ -1,7 +1,17 @@
 #!/bin/sh
 
 while true; do
+  START_TIME=`date +%s`
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/cron.php
   php -d memory_limit=<CRON_MEMORY_LIMIT> -f /nextcloud/occ preview:pre-generate &
-  sleep <CRON_PERIOD>
+
+  # Calculate seconds to sleep to get to cron period, or wait 10 seconds if running
+  # took longer than cron period
+  END_TIME=`date +%s`
+  ELAPSED_TIME=$(($END_TIME-$START_TIME))
+  CRON_PERIOD=<CRON_PERIOD>
+  CRON_SECONDS=$((${CRON_PERIOD/m/}*60))
+  SLEEP_SECONDS=$(($CRON_SECONDS-$ELAPSED_TIME))
+  if [ $SLEEP_SECONDS -lt 10 ]; then SLEEP_SECONDS=10; fi
+  sleep $SLEEP_SECONDS
 done
