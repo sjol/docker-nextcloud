@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Starting Notify..."
+echo "`date` - Starting Notify..."
 export PORT=7867
 
 if [ -x /apps2/notify_push/bin/x86_64/notify_push ] ; then
@@ -13,7 +13,7 @@ while true; do
   if [ -x /apps2/notify_push/bin/x86_64/notify_push ] ; then
     NOTIFY_LAST_MOD_NEW=$(date +%s -r /apps2/notify_push/bin/x86_64/notify_push )
     if  kill -0 $NOTIFY_PID 2> /dev/null ; then
-      echo "Notify is still running..."
+      echo "`date` - Notify is still running..."
       if [ $NOTIFY_LAST_MOD -lt $NOTIFY_LAST_MOD_NEW ]; then
         echo "Notify binary was updated. Restarting..."
         kill $NOTIFY_PID
@@ -22,7 +22,7 @@ while true; do
         NOTIFY_LAST_MOD=$NOTIFY_LAST_MOD_NEW
       fi
     else
-      echo "Notify died... restarting..."
+      echo "`date` - Notify died... restarting..."
       /apps2/notify_push/bin/x86_64/notify_push /config/config.php &
       NOTIFY_PID=$!
     fi
