@@ -14,6 +14,7 @@ while true; do
     NOTIFY_LAST_MOD_NEW=$(date +%s -r /apps2/notify_push/bin/x86_64/notify_push )
     if  kill -0 $NOTIFY_PID 2> /dev/null ; then
       echo "`date` - Notify is still running..."
+      if [ -z "${NOTIFY_LAST_MOD}" ]; then NOTIFY_LAST_MOD=$NOTIFY_LAST_MOD_NEW; fi
       if [ $NOTIFY_LAST_MOD -lt $NOTIFY_LAST_MOD_NEW ]; then
         echo "Notify binary was updated. Restarting..."
         kill $NOTIFY_PID
@@ -25,6 +26,7 @@ while true; do
       echo "`date` - Notify died... restarting..."
       /apps2/notify_push/bin/x86_64/notify_push /config/config.php &
       NOTIFY_PID=$!
+      NOTIFY_LAST_MOD=$(date +%s -r /apps2/notify_push/bin/x86_64/notify_push )
     fi
   fi
 
